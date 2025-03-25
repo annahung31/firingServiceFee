@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>燒窯費計算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        input, select {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .formula {
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>燒窯費計算器</h2>
+        <p>請選擇窯爐類型並輸入長、寬、高來計算燒窯費用</p>
+        
+        <label>
+            <input type="radio" name="kilnType" value="electric" checked> 電窯
+        </label>
+        <label>
+            <input type="radio" name="kilnType" value="gas"> 瓦斯窯
+        </label>
+        
+        <input type="number" id="length" placeholder="長度 (cm)">
+        <input type="number" id="width" placeholder="寬度 (cm)">
+        <input type="number" id="height" placeholder="高度 (cm)">
+        
+        <button onclick="calculateKilnCost()">計算燒窯費</button>
+
+        <div class="formula" id="formula"></div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateKilnCost() {
+            var length = parseFloat(document.getElementById('length').value);
+            var width = parseFloat(document.getElementById('width').value);
+            var height = parseFloat(document.getElementById('height').value);
+            var kilnType = document.querySelector('input[name="kilnType"]:checked').value;
+
+            if (isNaN(length) || isNaN(width) || isNaN(height)) {
+                document.getElementById('result').innerHTML = "請輸入有效的數值！";
+                document.getElementById('formula').innerHTML = "";
+                return;
+            }
+
+            var volume = length * width * height;
+            var cost = 0;
+            var formula = "";
+
+            if (kilnType === "electric") {
+                cost = volume * 0.15;
+                formula = `${length} x ${width} x ${height} x 0.15 = ${cost.toFixed(2)} 元 (電窯)`;
+            } else if (kilnType === "gas") {
+                cost = volume * 0.2;
+                formula = `${length} x ${width} x ${height} x 0.2 = ${cost.toFixed(2)} 元 (瓦斯窯)`;
+            }
+
+            document.getElementById('formula').innerHTML = formula;
+            document.getElementById('result').innerHTML = "燒窯費用是：" + Math.round(cost * 100) / 100 + " 元";
+        }
+    </script>
+
+</body>
+</html>
