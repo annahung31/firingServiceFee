@@ -75,7 +75,8 @@
 
         <div class="formula" id="formula"></div>
         <div class="result">
-            <p>燒窯費用是</p>
+            <p>--------</p>
+            <p>燒窯費用為</p>
             <p class="cost" id="roundedCost"></p>
         </div>
     </div>
@@ -99,15 +100,15 @@
 
             if (kilnType === "electric") {
                 cost = volume * 0.15;
-                formula = `${length} x ${width} x ${height} x 0.15 = ${cost} 元 (電窯)`;
+                formula = `${length} x ${width} x ${height} x 0.15(電窯) = ${cost} `;
             } else if (kilnType === "gas") {
                 cost = volume * 0.2;
-                formula = `${length} x ${width} x ${height} x 0.2 = ${cost} 元 (瓦斯窯)`;
+                formula = `${length} x ${width} x ${height} x 0.2(瓦斯窯) = ${cost} `;
             }
 
-            var roundedCost = Math.round(cost * 100) / 100;  // 四捨五入到小數點後兩位
+            var roundedCost = Math.round(cost);  // 四捨五入到小數點後兩位
 
-            document.getElementById('formula').innerHTML = "計算式： " + formula.replace(cost, roundedCost);
+            document.getElementById('formula').innerHTML = formula.replace(cost, roundedCost);
             document.getElementById('roundedCost').innerHTML = roundedCost + " 元";
         }
     </script>
