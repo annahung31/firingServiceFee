@@ -31,14 +31,14 @@
         }
         button {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #af724c;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #af724c;
         }
         .result {
             margin-top: 20px;
@@ -50,7 +50,15 @@
         }
         .cost {
             font-size: 72px; /* 比燒窯費用大四倍 */
-            color: #4CAF50;
+            color: #af724c;
+        }
+        label {
+            display: inline-block;
+            margin-right: 10px;  /* 添加間距，讓兩者之間不會太擠 */
+            vertical-align: middle;  /* 調整文字垂直對齊 */
+        }
+        input[type="radio"] {
+            vertical-align: middle;  /* 確保圓圈和文字垂直對齊 */
         }
     </style>
 </head>
@@ -75,7 +83,6 @@
 
         <div class="formula" id="formula"></div>
         <div class="result">
-            <p>--------</p>
             <p>燒窯費用為</p>
             <p class="cost" id="roundedCost"></p>
         </div>
@@ -108,7 +115,7 @@
 
             var roundedCost = Math.round(cost);  // 四捨五入到小數點後兩位
 
-            document.getElementById('formula').innerHTML = formula.replace(cost, roundedCost);
+            document.getElementById('formula').innerHTML = formula;
             document.getElementById('roundedCost').innerHTML = roundedCost + " 元";
         }
     </script>
