@@ -50,6 +50,18 @@
             font-size: 16px;
             color: #555;
         }
+        .cost-container {
+            margin-inline: 0;
+            line-height: 1.2;  /* 調整行距，讓行距更緊湊 */
+            margin-top: 20px;
+            border: 2px solid #af724c;  
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: center;
+            height: 200px;  /* 固定高度 */
+
+        }
         .cost {
             font-size: 72px; /* 比燒窯費用大四倍 */
             color: #af724c;
@@ -84,8 +96,9 @@
         <button onclick="calculateKilnCost()">計算燒窯費</button>
 
         <div class="formula" id="formula"></div>
-        <div class="result">
-            <p>燒窯費用為</p>
+        <!-- 燒窯費用和結果框框 -->
+        <div class="cost-container">
+            <p>燒窯費用是</p>
             <p class="cost" id="roundedCost"></p>
         </div>
     </div>
