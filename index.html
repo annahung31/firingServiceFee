@@ -48,6 +48,10 @@
             font-size: 16px;
             color: #555;
         }
+        .cost {
+            font-size: 72px; /* 比燒窯費用大四倍 */
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
@@ -70,7 +74,10 @@
         <button onclick="calculateKilnCost()">計算燒窯費</button>
 
         <div class="formula" id="formula"></div>
-        <div class="result" id="result"></div>
+        <div class="result">
+            <p>燒窯費用是</p>
+            <p class="cost" id="roundedCost"></p>
+        </div>
     </div>
 
     <script>
@@ -92,14 +99,16 @@
 
             if (kilnType === "electric") {
                 cost = volume * 0.15;
-                formula = `${length} x ${width} x ${height} x 0.15 = ${cost.toFixed(2)} 元 (電窯)`;
+                formula = `${length} x ${width} x ${height} x 0.15 = ${cost} 元 (電窯)`;
             } else if (kilnType === "gas") {
                 cost = volume * 0.2;
-                formula = `${length} x ${width} x ${height} x 0.2 = ${cost.toFixed(2)} 元 (瓦斯窯)`;
+                formula = `${length} x ${width} x ${height} x 0.2 = ${cost} 元 (瓦斯窯)`;
             }
 
-            document.getElementById('formula').innerHTML = formula;
-            document.getElementById('result').innerHTML = "燒窯費用是：" + Math.round(cost * 100) / 100 + " 元";
+            var roundedCost = Math.round(cost * 100) / 100;  // 四捨五入到小數點後兩位
+
+            document.getElementById('formula').innerHTML = "計算式： " + formula.replace(cost, roundedCost);
+            document.getElementById('roundedCost').innerHTML = roundedCost + " 元";
         }
     </script>
 
