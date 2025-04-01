@@ -42,6 +42,18 @@
         button:hover {
             background-color: #af724c;
         }
+        clean_button {
+            padding: 13px 20px;
+            background-color: #b89d8b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        clean_button:hover {
+            background-color: #ae9382;
+        }
         .result {
             margin-top: 20px;
             font-size: 18px;
@@ -59,7 +71,7 @@
             border-radius: 8px;
             background-color: #f9f9f9;
             text-align: center;
-            height: 200px;  /* 固定高度 */
+            height: 280px;  /* 固定高度 */
 
         }
         .cost {
@@ -73,6 +85,13 @@
         }
         input[type="radio"] {
             vertical-align: middle;  /* 確保圓圈和文字垂直對齊 */
+        }
+
+
+        #warning-message {
+            color: red;
+            font-size: 28px;  /* 原來的字型大小的兩倍 */
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -88,22 +107,37 @@
         <label>
             <input type="radio" name="kilnType" value="gas"> 瓦斯窯
         </label>
-        
+        <br></br>
+        <clean_button onclick="clearInputs()">清空重來</clean_button>
+        <br></br>
         <input type="number" id="length" placeholder="長度 (cm)">
         <input type="number" id="width" placeholder="寬度 (cm)">
         <input type="number" id="height" placeholder="高度 (cm)">
+        
         
         <button onclick="calculateKilnCost()">計算燒窯費</button>
 
         <div class="formula" id="formula"></div>
         <!-- 燒窯費用和結果框框 -->
         <div class="cost-container">
-            <p>燒窯費用是</p>
+            
             <p class="cost" id="roundedCost"></p>
+            <div id="warning-message" style="color: rgb(237, 78, 78); display: none;">最低是 20 元喔！</div>
         </div>
+        
+
     </div>
 
     <script>
+        function clearInputs() {
+            document.getElementById('length').value = '';
+            document.getElementById('width').value = '';
+            document.getElementById('height').value = '';
+            document.getElementById('roundedCost').innerHTML = '';  // 清空計算結果
+            document.getElementById('formula').innerHTML = '';      // 清空計算式
+            document.getElementById('warning-message').style.display = 'none'; //清空警示訊息
+        }
+
         function calculateKilnCost() {
             var length = parseFloat(document.getElementById('length').value);
             var width = parseFloat(document.getElementById('width').value);
@@ -132,6 +166,13 @@
 
             document.getElementById('formula').innerHTML = formula;
             document.getElementById('roundedCost').innerHTML = roundedCost + " 元";
+
+            if (roundedCost < 20) {
+                document.getElementById('warning-message').style.display = 'block';
+            } else {
+                document.getElementById('warning-message').style.display = 'none';
+            }
+
         }
     </script>
 
