@@ -93,6 +93,11 @@
             font-size: 28px;  /* 原來的字型大小的兩倍 */
             margin-top: 10px;
         }
+
+        #calculation-list {
+            list-style-type: none;  /* 去掉項目之前的點點 */
+            padding-left: 0;         /* 去掉左邊的內邊距，避免有額外的空間 */
+        }
     </style>
 </head>
 <body>
@@ -108,7 +113,8 @@
             <input type="radio" name="kilnType" value="gas"> 瓦斯窯
         </label>
         <br></br>
-        <clean_button onclick="clearInputs()">清空重來</clean_button>
+        <clean_button onclick="clearInputs()">重算</clean_button>
+        <clean_button onclick="clearResultList()">換人</clean_button>
         <br></br>
         <input type="number" id="length" placeholder="長度 (cm)">
         <input type="number" id="width" placeholder="寬度 (cm)">
@@ -124,11 +130,38 @@
             <p class="cost" id="roundedCost"></p>
             <div id="warning-message" style="color: rgb(237, 78, 78); display: none;">最低是 20 元喔！</div>
         </div>
-        
+
+
+        <!-- 顯示所有計算結果 -->
+        <div>
+            <h3>計算結果列表</h3>
+            <ul id="calculation-list"></ul>
+            <button onclick="calculateTotal()">加總所有結果</button>
+            <p id="total-cost" style="font-size: 18px;"></p>
+        </div>
 
     </div>
 
     <script>
+        let calculationResults = [];  // 儲存所有計算結果的陣列
+
+
+        function clearResultList() {
+
+            document.getElementById('total-cost').textContent = '';
+            document.getElementById('length').value = '';
+            document.getElementById('width').value = '';
+            document.getElementById('height').value = '';
+            document.getElementById('roundedCost').innerHTML = '';  // 清空計算結果
+            document.getElementById('formula').innerHTML = '';      // 清空計算式
+            document.getElementById('warning-message').style.display = 'none'; //清空警示訊息
+
+
+            // 清空儲存的結果
+            calculationResults = [];
+            updateCalculationList();
+        }
+
         function clearInputs() {
             document.getElementById('length').value = '';
             document.getElementById('width').value = '';
@@ -136,8 +169,10 @@
             document.getElementById('roundedCost').innerHTML = '';  // 清空計算結果
             document.getElementById('formula').innerHTML = '';      // 清空計算式
             document.getElementById('warning-message').style.display = 'none'; //清空警示訊息
+
         }
 
+        
         function calculateKilnCost() {
             var length = parseFloat(document.getElementById('length').value);
             var width = parseFloat(document.getElementById('width').value);
@@ -169,11 +204,38 @@
 
             if (roundedCost < 20) {
                 document.getElementById('warning-message').style.display = 'block';
+                calculationResults.push(20);
             } else {
                 document.getElementById('warning-message').style.display = 'none';
+                calculationResults.push(roundedCost);
             }
-
+            
+            
+            updateCalculationList();
         }
+
+
+        function updateCalculationList() {
+            const calculationList = document.getElementById('calculation-list');
+            calculationList.innerHTML = '';  // 清空現有的列表
+
+            // 顯示所有計算結果
+            calculationResults.forEach((result, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `作品 ${index + 1}:  ${result} 元`;
+                calculationList.appendChild(listItem);
+            });
+        }
+
+        function calculateTotal() {
+            // 計算所有結果的總和
+            const total = calculationResults.reduce((sum, current) => sum + current, 0);
+            document.getElementById('total-cost').textContent = `總燒窯費用 =  ${total.toFixed(0)} 元`;
+        }
+
+
+
+
     </script>
 
 </body>
