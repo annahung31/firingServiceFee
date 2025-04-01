@@ -21,7 +21,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 300px;
-            margin-right: 10px;
         }
         input, select {
             padding: 10px;
@@ -95,47 +94,10 @@
             margin-top: 10px;
         }
 
-
-        /* 預設為桌面版樣式，計算結果顯示在右邊 */
-        #calculation-list-container {
-            float: right;
-            width: 30%;
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #f9f9f9;
-            height: 500px;
-            text-align: center;
-        }
-
         #calculation-list {
-            list-style-type: none;
-            padding-left: 0;
-            font-size: 16px;
-            color: #333;
+            list-style-type: none;  /* 去掉項目之前的點點 */
+            padding-left: 0;         /* 去掉左邊的內邊距，避免有額外的空間 */
         }
-
-        #calculation-list li {
-            margin-bottom: 10px;
-            padding-left: 0;
-        }
-
-        /* 手機版樣式，計算結果顯示在下方 */
-        @media screen and (max-width: 768px) {
-            .main-container {
-                flex-direction: column;
-            }
-            #calculation-list-container {
-                float: none;  /* 取消右邊顯示 */
-                width: 100%;  /* 設為100%，佔滿螢幕 */
-                margin-top: 20px;
-            }
-        }
-
-
-
-
     </style>
 </head>
 <body>
@@ -151,7 +113,7 @@
             <input type="radio" name="kilnType" value="gas"> 瓦斯窯
         </label>
         <br></br>
-        <clean_button onclick="clearInputs()">下個作品</clean_button>
+        <clean_button onclick="clearInputs()">重算</clean_button>
         <clean_button onclick="clearResultList()">換人</clean_button>
         <br></br>
         <input type="number" id="length" placeholder="長度 (cm)">
@@ -168,18 +130,16 @@
             <p class="cost" id="roundedCost"></p>
             <div id="warning-message" style="color: rgb(237, 78, 78); display: none;">最低是 20 元喔！</div>
         </div>
-    
-    </div>
-    <!-- 顯示所有計算結果 -->
-    <div id="calculation-list-container">
-        <h3>計算結果列表</h3>
-        <ul id="calculation-list"></ul>
-        <button onclick="calculateTotal()">加總所有結果</button>
-        
 
-        <div class="cost-container">
-            <p class="cost" id="total-cost"></p>
+
+        <!-- 顯示所有計算結果 -->
+        <div>
+            <h3>計算結果列表</h3>
+            <ul id="calculation-list"></ul>
+            <button onclick="calculateTotal()">加總所有結果</button>
+            <p id="total-cost" style="font-size: 18px;"></p>
         </div>
+
     </div>
 
     <script>
@@ -270,7 +230,7 @@
         function calculateTotal() {
             // 計算所有結果的總和
             const total = calculationResults.reduce((sum, current) => sum + current, 0);
-            document.getElementById('total-cost').innerHTML = `${total.toFixed(0)} 元`;
+            document.getElementById('total-cost').textContent = `總燒窯費用 =  ${total.toFixed(0)} 元`;
         }
 
 
