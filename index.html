@@ -102,9 +102,11 @@
             width: 30%;
             margin-top: 20px;
             padding: 10px;
-            border: 2px solid #af724c;
             border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             background-color: #f9f9f9;
+            height: 500px;
+            text-align: center;
         }
 
         #calculation-list {
@@ -149,7 +151,7 @@
             <input type="radio" name="kilnType" value="gas"> 瓦斯窯
         </label>
         <br></br>
-        <clean_button onclick="clearInputs()">重算</clean_button>
+        <clean_button onclick="clearInputs()">下個作品</clean_button>
         <clean_button onclick="clearResultList()">換人</clean_button>
         <br></br>
         <input type="number" id="length" placeholder="長度 (cm)">
@@ -173,7 +175,11 @@
         <h3>計算結果列表</h3>
         <ul id="calculation-list"></ul>
         <button onclick="calculateTotal()">加總所有結果</button>
-        <p id="total-cost" style="font-size: 18px;"></p>
+        
+
+        <div class="cost-container">
+            <p class="cost" id="total-cost"></p>
+        </div>
     </div>
 
     <script>
@@ -264,7 +270,7 @@
         function calculateTotal() {
             // 計算所有結果的總和
             const total = calculationResults.reduce((sum, current) => sum + current, 0);
-            document.getElementById('total-cost').textContent = `總燒窯費用 =  ${total.toFixed(0)} 元`;
+            document.getElementById('total-cost').innerHTML = `${total.toFixed(0)} 元`;
         }
 
 
